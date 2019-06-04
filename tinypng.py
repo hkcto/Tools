@@ -11,8 +11,6 @@ def tinc(source=None):
         types = ['*.jpg', '*.jpeg', '*.png']
         files = []
 
-
-
         for file in types:
             files.extend(glob(file))
         
@@ -28,11 +26,11 @@ def tinc(source=None):
             resized.to_file(i)
             print(i, 'resize to 2880 done')
         
-        print('compressioning...')
-        for i in files:
-            source = tinify.from_file(i)
-            source.to_file(i)
-            print('compression done : ', i)
+    #     print('compressioning...')
+    #     for i in files:
+    #         source = tinify.from_file(i)
+    #         source.to_file(i)
+    #         print('compression done : ', i)
 
         break
     else:
