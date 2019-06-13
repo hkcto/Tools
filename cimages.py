@@ -18,9 +18,10 @@ def compressImage(srcPath,dstPath):
                 #開啟原圖片縮小後儲存，可以用if srcFile.endswith(".jpg")或者split，splitext等函式等針對特定檔案壓縮
                 sImg=Image.open(srcFile)
                 w,h=sImg.size
-                scale = float(w/h)
-                # dImg=sImg.resize((int(w/2),int(h/2)),Image.ANTIALIAS)  #設定壓縮尺寸和選項，注意尺寸要用括號
+                
+                # 設定壓縮尺寸(scale 按比例)和選項，注意尺寸要用括號
                 dImg=sImg.resize((int(2880),int(2880/scale)), Image.ANTIALIAS)
+                scale = float(w/h)
                 dImg.save(dstFile) #也可以用srcFile原路徑儲存,或者更改字尾儲存，save這個函式後面可以加壓縮編碼選項JPEG之類的
                 print (dstFile+" 成功！")
             except Exception:
