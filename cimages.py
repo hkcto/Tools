@@ -18,7 +18,9 @@ def compressImage(srcPath,dstPath):
                 #開啟原圖片縮小後儲存，可以用if srcFile.endswith(".jpg")或者split，splitext等函式等針對特定檔案壓縮
                 sImg=Image.open(srcFile)
                 w,h=sImg.size
-                dImg=sImg.resize((int(w/2),int(h/2)),Image.ANTIALIAS)  #設定壓縮尺寸和選項，注意尺寸要用括號
+                scale = float(w/h)
+                # dImg=sImg.resize((int(w/2),int(h/2)),Image.ANTIALIAS)  #設定壓縮尺寸和選項，注意尺寸要用括號
+                dImg=sImg.resize((int(2880),int(2880/scale)), Image.ANTIALIAS)
                 dImg.save(dstFile) #也可以用srcFile原路徑儲存,或者更改字尾儲存，save這個函式後面可以加壓縮編碼選項JPEG之類的
                 print (dstFile+" 成功！")
             except Exception:
@@ -29,4 +31,4 @@ def compressImage(srcPath,dstPath):
             compressImage(srcFile, dstFile)
 
 if __name__=='__main__':
-    compressImage(r"C:\Users\kay.lee.IW3E\Pictures\20190412_live_show_dress_run_photo",r"V:\iW3 Events\2019\04Apr\190412-EM-TDB《書虫的少年時代》舞台劇\Photo")
+    compressImage(r"V:\iW3 Events\2019\06June\190611-CP-MDHW movie爸爸是壞蛋冠軍\photo\upload\testing", r"V:\iW3 Events\2019\06June\190611-CP-MDHW movie爸爸是壞蛋冠軍\photo\upload\testing")
