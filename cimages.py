@@ -1,6 +1,5 @@
 import PIL.Image as Image
 import os
-from sys import argv
 
 #圖片壓縮批處理
 def compressImage(srcPath, width = 2880):
