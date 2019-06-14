@@ -24,6 +24,7 @@ def compressImage(srcPath, width = 2880):
             print(image+"失敗！")
             
 if __name__=='__main__':
+    print('注意!壓縮圖會覆蓋原圖')
     src = input(r"input patch : ")
     try:
         iwidth = int(input(r"input width (default 2880): "))
