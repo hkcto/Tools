@@ -1,35 +1,32 @@
 import PIL.Image as Image
 import os
+from sys import argv
 
 #圖片壓縮批處理
-def compressImage(srcPath,dstPath):
-    for filename in os.listdir(srcPath):
-        #如果不存在目的目錄則建立一個，保持層級結構
-        if not os.path.exists(dstPath):
-                os.makedirs(dstPath)
+def compressImage(srcPath, width = 2880):
+    os.chdir(srcPath) # 進入到指定目錄
+    srcFiles = os.listdir(srcPath)  # os.listdir 列出所有目錄中的檔案
 
-        #拼接完整的檔案或資料夾路徑
-        srcFile=os.path.join(srcPath,filename)
-        dstFile=os.path.join(dstPath,filename)
+    # images list 得到 jpeg jpg png 圖片
+    images = [name for name in srcFiles if name.endswith('.jpeg') or name.endswith('.jpg') or name.endswith('.png')]
+    for image in images:
+        try:
+            #開啟原圖片縮小後儲存，可以用if srcFile.endswith(".jpg")或者split，splitext等函式等針對特定檔案壓縮
+            sImg=Image.open(image)
+            w,h=sImg.size
 
-        # 如果是檔案就處理
-        if os.path.isfile(srcFile):
-            try:
-                #開啟原圖片縮小後儲存，可以用if srcFile.endswith(".jpg")或者split，splitext等函式等針對特定檔案壓縮
-                sImg=Image.open(srcFile)
-                w,h=sImg.size
-                
-                # 設定壓縮尺寸(scale 按比例)和選項，注意尺寸要用括號
-                dImg=sImg.resize((int(2880),int(2880/scale)), Image.ANTIALIAS)
-                scale = float(w/h)
-                dImg.save(dstFile) #也可以用srcFile原路徑儲存,或者更改字尾儲存，save這個函式後面可以加壓縮編碼選項JPEG之類的
-                print (dstFile+" 成功！")
-            except Exception:
-                print(dstFile+"失敗！")
-
-        # 如果是資料夾就遞迴
-        if os.path.isdir(srcFile):
-            compressImage(srcFile, dstFile)
-
+            # 設定壓縮尺寸(scale 按比例)和選項，注意尺寸要用括號
+            scale = float(w/h) # 寛除高,得出比例
+            dImg=sImg.resize((int(width),int(width/scale)), Image.ANTIALIAS)
+            dImg.save(image)
+            print (image+" 成功！")
+        except Exception:
+            print(image+"失敗！")
+            
 if __name__=='__main__':
-    compressImage(r"V:\iW3 Events\2019\06June\190611-CP-MDHW movie爸爸是壞蛋冠軍\photo\upload\testing", r"V:\iW3 Events\2019\06June\190611-CP-MDHW movie爸爸是壞蛋冠軍\photo\upload\testing")
+    src = input(r"input patch : ")
+    try:
+        iwidth = int(input(r"input width (default 2880): "))
+        compressImage(src, iwidth)
+    except:
+        compressImage(src)
